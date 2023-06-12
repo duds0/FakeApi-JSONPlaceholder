@@ -32,20 +32,13 @@ async function addNewPost(title, body) {
                 userID: 7
             })
         }
-    ).then(response => {
+    ).then(() => {
         const endTime = performance.now();
         const responseTime = endTime - startTime;
-        console.log(`Tempo de resposta: ${responseTime}ms`);
+        console.log(`Tempo de resposta: ${responseTime.toFixed(1)}ms`);
     });
 
-    readPosts();
-};
-
-document.querySelector("#insertButton").addEventListener("click", () => {
-    let title = document.querySelector("#titleField").value;
-    let body = document.querySelector("#bodyField").value;
-
-    setTimeout(function myNewPost() {
+    readPosts().then(() => {
         let title = document.querySelector("#titleField");
         let body = document.querySelector("#bodyField");
         let divP = document.querySelector(".posts");
@@ -56,7 +49,14 @@ document.querySelector("#insertButton").addEventListener("click", () => {
 
         title.value = "";
         body.value = "";
-    }, 2000);
+    }, () => {
+        console.log("ERRO!");
+    });
+};
+
+document.querySelector("#insertButton").addEventListener("click", () => {
+    let title = document.querySelector("#titleField").value;
+    let body = document.querySelector("#bodyField").value;
 
     if (title && body) {
         addNewPost(title, body);
